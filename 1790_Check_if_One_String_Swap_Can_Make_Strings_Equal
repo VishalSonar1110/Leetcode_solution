@@ -1,0 +1,32 @@
+/**
+ * @param {string} s1
+ * @param {string} s2
+ * @return {boolean}
+ */
+var areAlmostEqual = function(s1, s2) {
+    var j=0
+    var temp = []; //caa
+   
+    if(s1 == s2) {
+        return true;
+    }
+    
+    for(var i=0;i<s1.length;i++) {
+         if(s1[i]!=s2[i]) {
+             temp[j] = i;
+                j++;
+            }
+    }
+    
+    var isSwapable = function(){
+        if(temp.length == 0) {
+              return false; 
+        }
+        return s1[temp[0]]==s2[temp[1]] && s1[temp[1]]== s2[temp[0]]
+    }
+    
+    if(j==2 && isSwapable()){
+        return true;
+    }
+    return false;
+};
