@@ -1,0 +1,72 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+bool isPal = true;
+
+struct ListNode *checkPal(struct ListNode *p,struct ListNode *mid, int extra){
+    struct ListNode *rn;
+    
+    if (p == mid) {
+        if (extra == 1) {
+            return mid->next;
+        }
+        return mid;
+    }
+    
+    rn = checkPal(p->next, mid, extra);
+    
+    if(p->val != rn->val) {
+        if (isPal) {
+            isPal = false;
+        }
+    }
+    
+    return rn->next;
+}
+
+bool isPalindrome(struct ListNode* p) {
+    isPal = true;
+    struct ListNode *mid, *last;
+    last = p;
+    mid = p;
+    int extra = 1;
+    int count = 1;
+    
+    while(last->next!=0) {
+        if(last->next->next == NULL) {
+            last = last->next;
+            extra = 0;
+            count+=1;
+            break;
+        }
+        count+=2;
+        mid = mid->next;
+        last = last->next->next;
+    }
+    
+    if (extra == 0) {
+         mid = mid->next;
+    } 
+   
+    if (count == 1) {
+        return true;
+    } 
+    
+
+    if (count == 2) {
+        if (p->val == last->val) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        checkPal(p,mid,extra);
+    }
+
+    // checkPal(p,mid,extra);
+    return isPal;
+}
