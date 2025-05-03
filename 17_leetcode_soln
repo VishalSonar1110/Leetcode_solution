@@ -1,0 +1,28 @@
+pd = {
+        '2':'abc',
+        '3':'def',
+        '4':'ghi',
+        '5':'jkl',
+        '6':'mno',
+        '7':'pqrs',
+        '8':'tuv',
+        '9':'wxyz'
+    }
+
+class Solution:
+    def __init__(self):
+        self.result = []
+
+    def getDailerAlpha(self,n,m,value,dial):
+        if (n == len(dial)):
+            self.result.append(value)
+            return
+        
+        for m in range(0,len(pd[dial[n]])):
+            self.getDailerAlpha(n+1,m,value+pd[dial[n]][m],dial)
+
+    def letterCombinations(self, digits: str):
+        if(digits==""):
+            return []
+        self.getDailerAlpha(0,0,"",digits)
+        return self.result
