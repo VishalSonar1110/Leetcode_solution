@@ -1,0 +1,107 @@
+import math
+from decimal import *
+
+class Solution:
+    def search_and_rescue(self,arr1, arr2, pp, ptr, is_even):
+        if len(arr1) == 0:
+            arr1.append(arr2[len(arr2)-1])
+        
+        if len(arr2) == 0:
+            arr2.append(arr1[len(arr1)-1])
+
+        def perform_binary_search(primary, nonPrimary):
+            low = 0
+            high = len(primary) - 1
+            mid = 0
+            while low <= high:
+                mid = low + (high - low)//2
+                if nonPrimary[0] == primary[mid]:
+                    return mid
+                elif nonPrimary[0] > primary[mid]:
+                    low = mid + 1
+                elif abs(primary[mid] - nonPrimary[0]) == 1:
+                    return mid
+                else:
+                    high = mid - 1
+            return mid
+
+        def getPrimaryArray():
+            return arr1 if arr1[0] < arr2[0] else arr2
+
+        def getNonPrimaryArray():
+            return arr2 if arr2[0] > arr1[0] else arr1
+        
+        pr = getPrimaryArray()
+        npr = getNonPrimaryArray()
+
+        mid = perform_binary_search(pr, npr)
+        prev_p = ptr
+        ptr = ptr + (mid + 1) + 1
+
+        def get_result(a,b):
+            return (float(a + b))/2
+
+        if (prev_p + ptr-2 < pp[0] or prev_p + ptr-2 == pp[0]) and len(npr) > 1:
+            if pr[mid] > npr[1]:
+                p = mid
+                return self.search_and_rescue(pr[mid:],npr,pp,p,is_even)
+
+        if(prev_p + ptr-2 == pp[0]-1):   #replace and slice & 
+            ptr = ptr - 1
+            if(npr[0]>=pr[mid]):
+                pr[mid] = npr[0]
+            return self.search_and_rescue(pr[mid:],npr[1:], pp,ptr,is_even)
+
+        if(prev_p + ptr-2 < pp[0]):  #slice  & Recursion for odd and 
+            if(mid + 1 == pp[0]):
+                if pr[mid] >= npr[0]:
+                    return pr[mid]
+                return npr[0]
+                
+            return self.search_and_rescue(pr[mid+1:],npr[1:], pp,ptr,is_even)
+
+        if(prev_p + ptr-2 >= pp[0]):  #check and get
+            a_index = abs(pp[0]-prev_p)
+            if len(pr) == a_index:
+                a = npr[0]
+            else:
+                a = pr[a_index]
+            
+            if not is_even:
+                if len(pr) != abs(pp[0]-prev_p):
+                    if a < npr[0]:
+                        return a
+                    else:
+                        return npr[0]
+                else:
+                    return a
+                return a
+            else:
+                b_index = abs(pp[1]-prev_p)
+                if a_index == mid or a_index == len(pr):
+                    if len(npr) > 1:
+                        b = npr[1] if a > npr[1] or a == npr[0] else npr[0]
+                    else:
+                        b = npr[0]
+                
+                if a_index == mid - 1:
+                    if npr[0] <= pr[b_index]:
+                        b =  npr[0]
+                    else:
+                        b = pr[b_index]
+                
+                if a_index <= mid - 2:
+                    b = pr[b_index]
+            return get_result(a,b)
+
+
+    def findMedianSortedArrays(self, arr1,arr2) -> float:
+        ttl = len(arr1) + len(arr2)
+        isEven = ttl % 2 == 0
+        def getPostionPointer():
+            if ttl % 2 == 0:
+                return [math.floor(ttl / 2) - 1, math.floor(ttl / 2)]
+            else:
+                return [math.floor(ttl / 2)]     
+        return self.search_and_rescue(arr1,arr2,getPostionPointer(),0,isEven)
+
