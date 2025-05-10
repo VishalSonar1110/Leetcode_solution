@@ -1,23 +1,32 @@
-s = "a"
-t = "aa"
+s = "ADOBECODEBANC"
+t = "ABC"
+# Expected: "abcefaecb"
 
 def getMiniWindow(s,t):
     
     if len(t) >= len(s):
         return ""
     
-    d = {},
+    d = {}
     count = len(s) - 1
     fp = 0
     lp = len(s) - 1
+    dt = {}
     
-    for i in t:
-        d[i] = 0   
+    
+    for i in range(0,len(t)):
+        d[t[i]] = 1 
+        dt[t[i]] = 0
+
+    for i in range(0,len(t)):
+        if t[i] in dt:
+            dt[t[i]] += 1  
     
     for i in range(0,len(s)):
         if s[i] in d:
             d[s[i]] += 1 
         
+
     for i in range(0,len(s)-1):
         if (s[fp] in d) and (s[lp] in d):
             if (lp - fp) <= count:
@@ -25,7 +34,8 @@ def getMiniWindow(s,t):
                 d[s[fp]] = d[s[fp]] - 1
                 fp = fp + 1
                 
-                if d[s[fp - 1]] == 0:
+                
+                if d[s[fp - 1]] == dt[s[fp - 1]]:
                     break;
             
             continue;
@@ -34,9 +44,12 @@ def getMiniWindow(s,t):
             fp = fp+1
             
         if s[lp] not in d:
-            lp = lp+1
+            lp = lp-1
 
     print(s[fp-1:lp+1])
     print(d)
+    print(dt)
     
     return s[fp-1:lp+1]
+
+getMiniWindow(s,t)
