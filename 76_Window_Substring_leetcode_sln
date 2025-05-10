@@ -1,0 +1,26 @@
+s = "ADOBECODEBANC"
+t = "ABC"
+
+fp = 0
+lp = 0
+
+hashd = {}
+count = 0
+for i in t:
+    hashd[i] = -1;
+
+for i in range(0,len(s)):
+    if s[i] in hashd and hashd[s[i]] == -1:
+        hashd[s[i]] = i;
+        count += 1
+    
+        if count == 1:
+            fp = i
+        
+        if count == len(t):
+            lp = i;
+            break;
+        
+print(fp)
+print(lp)
+print(hashd)
