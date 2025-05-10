@@ -1,26 +1,42 @@
-s = "ADOBECODEBANC"
-t = "ABC"
+s = "a"
+t = "aa"
 
-fp = 0
-lp = 0
-
-hashd = {}
-count = 0
-for i in t:
-    hashd[i] = -1;
-
-for i in range(0,len(s)):
-    if s[i] in hashd and hashd[s[i]] == -1:
-        hashd[s[i]] = i;
-        count += 1
+def getMiniWindow(s,t):
     
-        if count == 1:
-            fp = i
+    if len(t) >= len(s):
+        return ""
+    
+    d = {},
+    count = len(s) - 1
+    fp = 0
+    lp = len(s) - 1
+    
+    for i in t:
+        d[i] = 0   
+    
+    for i in range(0,len(s)):
+        if s[i] in d:
+            d[s[i]] += 1 
         
-        if count == len(t):
-            lp = i;
-            break;
+    for i in range(0,len(s)-1):
+        if (s[fp] in d) and (s[lp] in d):
+            if (lp - fp) <= count:
+                count =  (lp - fp)
+                d[s[fp]] = d[s[fp]] - 1
+                fp = fp + 1
+                
+                if d[s[fp - 1]] == 0:
+                    break;
+            
+            continue;
         
-print(fp)
-print(lp)
-print(hashd)
+        if s[fp] not in d:
+            fp = fp+1
+            
+        if s[lp] not in d:
+            lp = lp+1
+
+    print(s[fp-1:lp+1])
+    print(d)
+    
+    return s[fp-1:lp+1]
