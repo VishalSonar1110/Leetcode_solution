@@ -53,3 +53,166 @@ def getMiniWindow(s,t):
     return s[fp-1:lp+1]
 
 getMiniWindow(s,t)
+
+
+
+
+#------
+
+s = "ADOBECODEBANC"
+t = "ABC"
+
+dt = {}
+dist = len(s)
+# dti = {}
+fp= 0
+
+for i in t:
+    dt[i] = -1
+    # dti[i] = -1
+
+for i in range(0,len(s)):
+    if s[i] not in dt:
+       continue;
+        
+    # dti[s[i]] = i 
+    if dt[s[i]] == -1:
+        dt[s[i]] = mp = lp = i
+
+print(lp)
+print(dt)
+# print(dti)
+print(mp)
+
+while(lp >= len(s)):
+    #whdn fp is x and lp is x
+    if s[fp] not in dt and s[lp] not in dt:
+        fp = fp + 1
+        lp = lp + 1
+        continue
+        
+    #when fp in good and lp is x
+    if s[fp] in dt and s[lp] not in dt:
+        lp = lp + 1
+        continue
+    
+    # when fp is x and lp 
+    # if s[fp] in dt and s[lp] not in dt:
+    #     lp = lp + 1
+    if s[fp] not in dt and (s[lp] in dt and s[lp] == mp):
+        fp = fp + 1
+        continue
+        
+    if s[fp] in dt and (s[lp] in dt and s[lp] != mp):
+        dt[s[lp]] = lp
+        lp = lp + 1
+        continue
+    
+    if s[fp] in dt and s[lp] == mp:
+        
+        # dist = lp - fp
+        if (lp - fp) > dist:
+            dist = (lp - fp)
+        
+        # if temp == 0:
+        #     temp = lp - fp
+        # else:
+        #     if (lp - fp) >= temp:
+        #         temp = lp - fp
+        
+        if dt[sp[fp]] == fp:
+            mp = s[fp]
+            # dt[m] = -1
+        fp = fp + 1
+        lp = lp + 1
+        
+print(fp)
+print(lp)
+print(dist)
+        
+# print(s[fp:lp])
+    
+#     if s[fp] in dt and s[lp] == mp:
+        
+#         #update & add temp
+#         if temp == 0:
+#             temp = lp - fp
+#         else:
+#             (lp - fp) >= temp:
+#             temp = lp - fp
+        
+#         #check if the dict index of is same then add missing piece and let the lp initial the seacrh else if same and simply push fp
+#         if dt[sp[fp]] == fp:
+#             mp = s[fp]
+#             dt[m] = -1
+        
+#         fp = fp + 1
+        
+#     if s[fp] in not dt and s[lp] == mp:
+#         fp = fp + 1
+    
+#     if s[fp] in dt:
+        
+    
+    
+    
+
+
+
+# for i in t:
+#     dt[i] = -1
+#     dtc[i] = 0
+
+# lp = 0
+# fp = 0
+# for i in range(0,len(s)):
+#     if s[i] in dt and dt[s[i]] == -1:
+#         dt[s[i]] = i
+#         # if fp >= i and fp <= i
+#         lp = i
+#     if s[i] in 
+ 
+# print(lp)   
+# print(fp)
+# print(dt)
+     
+# fp = 0
+# count = lp = len(s) - 1
+
+# while(fp<=lp):
+#     if s[fp] in dt and s[lp] not in dt:
+#         lp = lp - 1
+#         continue
+    
+#     if s[fp] not in dt and s[lp] in dt:
+#         fp = fp + 1
+#         continue
+    
+#     if s[fp] not in dt and s[lp] not in dt:
+#         lp = lp - 1
+#         fp = fp + 1
+#         continue
+
+#     temp = lp - fp
+#     if temp <= count:
+#         count = temp
+    
+#     dtc[s[fp]] = dtc[s[fp]] -1
+    
+#     if dtc[s[fp]] == 0 or dtc[s[lp]] == 0:
+#         break;
+
+#     if s[fp] == s[lp] and dtc[s[fp]] == 0:
+#         lp = lp - 1
+#     else:
+#         fp = fp + 1
+    
+# print(dt)
+# # print(dtc)
+# print(count)
+# print(fp)
+# print(lp)
+# print(s[fp:lp+1])
+    
+    
+        
