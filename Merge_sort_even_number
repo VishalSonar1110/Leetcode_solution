@@ -1,0 +1,75 @@
+# # # def p(value):
+# # #     print(value)
+
+def merge(arr,l,h,p):
+    
+    arrb = []
+    
+    i  = l
+    mid = int((h+l)/2) 
+    j = mid + 1
+
+    # print(arr[l:h])
+    
+
+    while(i<=mid and j<=h):
+        if(arr[i]<=arr[j]):
+            arrb.append(arr[i])
+            i=i+1
+        else:
+            arrb.append(arr[j])
+            j=j+1
+    
+    for i in range(i, mid+1):
+        arrb.append(arr[i])
+    
+    for i in range(j, h+1):
+        arrb.append(arr[i])
+    
+    k = 0
+    while(l<=h): 
+        arr[l] = arrb[k]
+        k = k + 1
+        l=l+1
+    
+
+# print(merge([12,19],))
+# arr = [25,31,28,20,15,10,8,9]
+# merge([25,28,20,31],0,3)
+# merge(arr,2,3)
+
+def merge_sort():
+    arr = [25,31,28,20,15,10,100,9]
+    n = len(arr)
+
+    p = 2
+    while(p<=n):
+        for i in range(0,n+1,p):
+            # print(i,p-1)
+            merge(arr,i,(i+p)-1,p)
+        
+            if i+p>=n:
+                break;
+        p = p*2
+        
+    print(arr)
+
+merge_sort()
+
+            
+# a = [12,33,50]
+
+# def test(a):
+#     temp = a[1]
+#     a[1] = a[0]
+#     a[0] = temp
+
+# print(a)
+# test(a)
+# print(a)
+
+
+# for i in range(0,5, ):
+#     print(i)
+#     i = i * 2
+  
